@@ -54,11 +54,3 @@ Feature:
 // Auditorium
 // Seat
 // Show
-
-git config --global user.email "ajitjaiswal@gmail.com"
-
-git remote add origin "https://github.com/ajitjcopilot/bookmyshow.git"
-
-git remote add origin https://github.com/ajitjcopilot/bookmyshow.git
-
-git remote set-url origin "https://ajitjcopilot@github.com/ajitjcopilot/bookmyshow.git"
