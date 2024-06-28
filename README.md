@@ -8,7 +8,7 @@ CREATE DATABASE
 sandeep=# create user USERNAME;
 CREATE ROLE
 sandeep=# grant all privileges on database DBNAME to USERNAME;
-GRANT
+GRANTgit config --global user.email “ajitjaiswal@gmail.com”
 sandeep=#
 ```
 
@@ -54,3 +54,13 @@ Feature:
 // Auditorium
 // Seat
 // Show
+
+git config --global user.email "ajitjaiswal@gmail.com"
+
+git remote add origin "https://github.com/ajitjcopilot/bookmyshow.git"
+
+git remote add origin https://github.com/ajitjcopilot/bookmyshow.git
+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
+
+
+git remote set-url origin "https://ajitcopilot@github.com/ajitcopilot/bookmyshow.git"
