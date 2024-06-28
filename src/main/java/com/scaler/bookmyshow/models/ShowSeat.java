@@ -9,15 +9,8 @@ import lombok.Setter;
 @Setter
 @Entity
 public class ShowSeat extends BaseModel {
-    //   ShowSeat    Show
-    //      1         1
-    //      M         1
     @ManyToOne
-    private Show show; // 1 show -> many show seats, and many show seats belong to 1 show
-
-    //  SS : S
-    //   1   1
-    //   m    1
+    private Show show;
     @ManyToOne
     private Seat seat;
 

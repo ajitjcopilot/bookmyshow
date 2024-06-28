@@ -4,17 +4,11 @@ import com.scaler.bookmyshow.controllers.*;
 import com.scaler.bookmyshow.dtos.CreateUserRequestDto;
 import com.scaler.bookmyshow.models.Language;
 import com.scaler.bookmyshow.models.SeatType;
-import com.scaler.bookmyshow.models.Theatre;
-import com.scaler.bookmyshow.models.User;
-import com.scaler.bookmyshow.services.TheatreService;
-import com.scaler.bookmyshow.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +16,8 @@ import java.util.Map;
 
 @SpringBootApplication
 public class BookMyShowApplication implements CommandLineRunner {
-//    @Autowired
-//    @Qualifier("apple")
-//    private UserService userService;
 
-//    @Autowired
+    //    @Autowired
     private UserController userController;
     private CityController cityController;
     private TheatreController theatreController;

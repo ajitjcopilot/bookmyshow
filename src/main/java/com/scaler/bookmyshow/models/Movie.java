@@ -12,11 +12,10 @@ import java.util.List;
 public class Movie extends BaseModel {
     private String name;
 
-    @ElementCollection // M:M
+    @ElementCollection
     @Enumerated(EnumType.STRING)
     private List<Language> languages;
-//    1  : M
-//    M   :  1
+
     @ManyToMany
     private List<Actor> actors;
     private int length;

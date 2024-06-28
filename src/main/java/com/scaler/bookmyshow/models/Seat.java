@@ -12,6 +12,6 @@ import lombok.Setter;
 public class Seat extends BaseModel {
     private String seatNumber;
 
-    @Enumerated(EnumType.STRING) // 1:M
+    @Enumerated(EnumType.STRING)
     private SeatType seatType;
 }

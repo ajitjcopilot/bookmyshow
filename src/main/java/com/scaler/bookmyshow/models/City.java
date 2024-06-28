@@ -13,9 +13,6 @@ import java.util.List;
 @Entity
 public class City extends BaseModel {
     private String name;
-
-//    1 : M
-//    1  :  1
     @OneToMany(fetch = FetchType.EAGER)
     private List<Theatre> theatres;
 }

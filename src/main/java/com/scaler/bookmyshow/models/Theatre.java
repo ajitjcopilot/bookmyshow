@@ -15,13 +15,9 @@ public class Theatre extends BaseModel {
     private String name;
     private String address;
 
-    // 1 : M
-    // 1  :  1
     @OneToMany(mappedBy = "theatre", fetch = FetchType.EAGER)
     private List<Auditorium> auditoriums;
 
-    // 1 : m
-    // 1  :  1
     @OneToMany
     private List<Show> upcomingShows;
 }

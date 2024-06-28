@@ -6,8 +6,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-// 1:M
-// 1:1
 
 @Entity
 @Getter
@@ -23,8 +21,6 @@ public class Auditorium extends BaseModel {
     @Enumerated(EnumType.STRING)
     private List<AuditoriumFeature> auditoriumFeatures;
 
-    // 1 A : 1 T
-    // M  A :   1 T
     @ManyToOne
     private Theatre theatre;
 }

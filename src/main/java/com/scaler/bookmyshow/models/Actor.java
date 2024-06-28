@@ -17,7 +17,3 @@ public class Actor extends BaseModel {
     private List<Movie> movies;
 }
 
-// Actor: Movie
-// 1    : m
-// m     :  1
-// m:m

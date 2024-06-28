@@ -1,7 +1,6 @@
 package com.scaler.bookmyshow;
 
 import com.scaler.bookmyshow.controllers.TicketController;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class TicketBookRunner implements Runnable {
         this.showSeatId = showSeatId;
         this.userId = userId;
     }
+
     @Override
     public void run() {
         try {
