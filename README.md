@@ -61,6 +61,4 @@ git remote add origin "https://github.com/ajitjcopilot/bookmyshow.git"
 
 git remote add origin https://github.com/ajitjcopilot/bookmyshow.git
 
-
-
 git remote set-url origin "https://ajitjcopilot@github.com/ajitjcopilot/bookmyshow.git"
