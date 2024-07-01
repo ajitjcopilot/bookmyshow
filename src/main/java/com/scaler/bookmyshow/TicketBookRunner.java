@@ -31,7 +31,7 @@ public class TicketBookRunner implements Runnable {
                     userId
             );
         } catch (Exception exception) {
-            System.out.println("EXCEPTIOOOOOOOOONNNN: " + exception.getMessage());
+            System.out.println("EXCEPTION: " + exception.getMessage());
         }
 
     }
