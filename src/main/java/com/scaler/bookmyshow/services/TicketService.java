@@ -9,20 +9,22 @@ import com.scaler.bookmyshow.repositories.ShowRepository;
 import com.scaler.bookmyshow.repositories.ShowSeatRepository;
 import com.scaler.bookmyshow.repositories.TicketRepository;
 import com.scaler.bookmyshow.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class TicketService {
-    private ShowSeatRepository showSeatRepository;
-    private UserRepository userRepository;
-    private ShowRepository showRepository;
-    private TicketRepository ticketRepository;
+    private final ShowSeatRepository showSeatRepository;
+    private final UserRepository userRepository;
+    private final ShowRepository showRepository;
+    private final TicketRepository ticketRepository;
+    private static final Logger logger = LoggerFactory.getLogger(TicketService.class);
 
     @Autowired
     public TicketService(ShowSeatRepository showSeatRepository, UserRepository userRepository, ShowRepository showRepository, TicketRepository ticketRepository) {
@@ -30,8 +32,8 @@ public class TicketService {
         this.userRepository = userRepository;
         this.showRepository = showRepository;
         this.ticketRepository = ticketRepository;
+        logger.info("TicketService initialized with repositories");
     }
-
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public Ticket bookTicket(
@@ -39,61 +41,66 @@ public class TicketService {
             List<Long> showSeatIds,
             Long userId
     ) throws ShowSeatNotAvailableException {
+        logger.info("Attempting to book ticket for showId: {}, userId: {}, showSeatIds: {}", showId, userId, showSeatIds);
 
-        //Fetch the given showSeats
+        // Fetch the given showSeats
         List<ShowSeat> showSeats = showSeatRepository.findByIdIn(showSeatIds);
 
-        //check for availability
-        for(ShowSeat showSeat : showSeats){
-            if(!showSeat.getState().equals(ShowSeatState.AVAILABLE)){
-                throw new ShowSeatNotAvailableException("Show seat is not available : " + showSeat.getId());
+        // Check for availability
+        for (ShowSeat showSeat : showSeats) {
+            if (!showSeat.getState().equals(ShowSeatState.AVAILABLE)) {
+                logger.error("Show seat is not available: {}", showSeat.getId());
+                throw new ShowSeatNotAvailableException("Show seat is not available: " + showSeat.getId());
             }
         }
 
-        //update the status to lock
-        for(ShowSeat showSeat : showSeats){
+        // Update the status to lock
+        for (ShowSeat showSeat : showSeats) {
             showSeat.setState(ShowSeatState.LOCKED);
             showSeatRepository.save(showSeat);
         }
+        logger.info("Show seats locked for showId: {}", showId);
 
-        //wait for payment confirmation
-        //assuming payment confirmation done
-        //return the ticket object
+        // Assuming payment confirmation done
+        // Return the ticket object
         Ticket ticket = new Ticket();
         ticket.setTicketStatus(TicketStatus.SUCCESS);
         ticket.setShowSeats(showSeats);
-        ticket.setShow(showRepository.findById(showId).get());
+        ticket.setShow(showRepository.findById(showId).orElse(null));
         ticket = ticketRepository.save(ticket);
+        logger.info("Ticket created with id: {} for showId: {}", ticket.getId(), showId);
 
-        //update the status of showSeats to booked
-        for(ShowSeat showSeat : showSeats){
+        // Update the status of showSeats to booked
+        for (ShowSeat showSeat : showSeats) {
             showSeat.setState(ShowSeatState.BOOKED);
             showSeatRepository.save(showSeat);
         }
+        logger.info("Show seats booked for ticket id: {}", ticket.getId());
 
         return ticket;
     }
 
-
     private List<ShowSeat> checkAvailabilityAndLock(List<Long> showSeatIds) throws ShowSeatNotAvailableException {
-        //Fetch the given showSeats
+        logger.info("Checking availability and locking seats for showSeatIds: {}", showSeatIds);
+
+        // Fetch the given showSeats
         List<ShowSeat> showSeats = showSeatRepository.findByIdIn(showSeatIds);
 
-        //check for availability
-        for(ShowSeat showSeat : showSeats){
-            if(!showSeat.getState().equals(ShowSeatState.AVAILABLE)){
-                throw new ShowSeatNotAvailableException("Show seat is not available : " + showSeat.getId());
+        // Check for availability
+        for (ShowSeat showSeat : showSeats) {
+            if (!showSeat.getState().equals(ShowSeatState.AVAILABLE)) {
+                logger.error("Show seat is not available: {}", showSeat.getId());
+                throw new ShowSeatNotAvailableException("Show seat is not available: " + showSeat.getId());
             }
         }
 
-        //update the status to lock
-        for(ShowSeat showSeat : showSeats){
+        // Update the status to lock
+        for (ShowSeat showSeat : showSeats) {
             showSeat.setState(ShowSeatState.LOCKED);
             showSeatRepository.save(showSeat);
         }
+        logger.info("Show seats locked for showSeatIds: {}", showSeatIds);
 
         return showSeats;
     }
 }
-
-// default isolation level for MySQL, PostGres SQL -> Repeatable Read.
