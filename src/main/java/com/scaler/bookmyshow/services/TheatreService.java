@@ -40,7 +40,7 @@ public class TheatreService {
         // Check if the city with that ID exists
         Optional<City> cityOptional = cityRepository.findById(cityId);
         if (cityOptional.isEmpty()) {
-            throw new CityNotFoundException("No city with given ID");
+            throw new CityNotFoundException();
         }
 
         // Create a theatre object
