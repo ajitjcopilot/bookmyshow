@@ -27,6 +27,7 @@ The `BookMyShow` application is a ticket booking system for movies, events, and 
 - Maven 3.8+
 - Docker
 - PostgreSQL
+- Spring boot 3.0.4
 
 ### Setup Instructions
 
